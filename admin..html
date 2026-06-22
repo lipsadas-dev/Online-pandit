@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+.pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.approved {
+    color: green;
+    font-weight: bold;
+}
+
+.rejected {
+    color: red;
+    font-weight: bold;
+}
+
+.completed {
+    color: blue;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<h1>Admin Panel</h1>
+
+<button onclick="logout()">Logout</button>
+<div id="dashboard">
+    <h3>Total Bookings: <span id="total">0</span></h3>
+    <h3>Pending: <span id="pending">0</span></h3>
+    <h3>Approved: <span id="approved">0</span></h3>
+    <h3>Rejected: <span id="rejected">0</span></h3>
+    <h3>Completed: <span id="completed">0</span></h3>
+</div>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Puja Type</th>
+            <th>Booking Date</th>
+            <th>Booking Time</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody id="bookingTable"></tbody>
+</table>
+
+<script>
+fetch("http://localhost:5000/user")
+.then(res => res.json())
+.then(data => {
+
+    let total = data.length;
+    let pending = 0;
+    let approved = 0;
+    let rejected = 0;
+    let completed = 0;
+
+    let output = "";
+    data.forEach(item => {
+
+
+      let buttons = "";
+
+     if(item.status.toLowerCase() === "pending") pending++;
+     if(item.status.toLowerCase() === "approved") approved++;
+     if(item.status.toLowerCase() === "rejected") rejected++;
+     if(item.status.toLowerCase() === "completed") completed++;
+
+    if(item.status && item.status.trim().toLowerCase() === "pending"){
+      buttons = `
+        <button onclick="approveBooking(${item.id})">Approve</button>
+
+        <button onclick="rejectBooking(${item.id})">Reject</button>
+    `;
+    }
+     else if(item.status && item.status.trim().toLowerCase() === "approved"){
+        buttons = `
+             <button onclick="updateStatus(${item.id}, 'Completed')">
+              Completed
+            <button>
+        `;          
+    }
+        output += `
+        <tr>
+            <td>${item.name}</td>
+            <td>${item.phone}</td>
+            <td>${item.puja_type}</td>
+            <td>${item.booking_date}</td>
+            <td>${item.booking_time}</td>
+            <td>
+              <span class="${item.status.toLowerCase()}">
+                ${item.status}
+             </span>
+            </td>
+             
+            <td>${buttons}</td>
+        </tr>
+        `;
+    });
+    document.getElementById("total").innerText = total;
+    document.getElementById("pending").innerText = pending;
+    document.getElementById("approved").innerText = approved;
+    document.getElementById("rejected").innerText = rejected;
+    document.getElementById("completed").innerText = completed;
+
+    document.getElementById("bookingTable").innerHTML = output;
+
+});
+
+
+function approveBooking(id) {
+
+    fetch(`http://localhost:5000/approve-booking/${id}`, {
+        method: "PUT"
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+        location.reload();
+    });
+
+}
+function rejectBooking(id) {
+
+    fetch(`http://localhost:5000/reject-booking/${id}`, {
+        method: "PUT"
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+        location.reload();
+    });
+
+}
+function updateStatus(id, status) {
+    fetch("http://localhost:5000/update-status", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id: id,
+            status: status
+        })
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+        location.reload();
+    })
+    .catch(err => console.log(err));
+}
+function logout() {
+    window.location.href = "login.html";
+}
+</script>
+<footer>
+    <p>© 2026 PujaConnect | Online Puja Booking System</p>
+</footer>
+</body>
+</html>

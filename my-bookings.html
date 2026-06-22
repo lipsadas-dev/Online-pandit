@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings - PujaConnect</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>My Bookings</h1>
+       <button onclick="logout()">Logout</button>
+    
+    <div id="bookingsContainer"></div>
+    <script>
+fetch("http://localhost:5000/user")
+.then(res => res.json())
+.then(data => {
+
+    let output = "";
+
+    data.forEach(item => {
+        output += `
+        <div class="booking-card">
+            <p>Booking ID: 
+                <span class="booking-id"> ${item.id}</span>
+            </p>
+
+            <h3>${item.puja_type}</h3>
+            <p>Name:
+                <span class="customer-name"> ${item.name}</span>
+            </p>
+            <p>Phone:
+                <span class="phone-number"> ${item.phone}</span>
+            </p>
+            <p>Date:
+                <span class="booking-date">
+                     ${new Date(item.booking_date).toLocaleDateString('en-GB')}
+                </span>
+            </p>
+            <p>Time: 
+                <span class="booking-time">${item.booking_time}</span>
+            </p>
+            <p>Status: 
+               <span class="${item.status.toLowerCase()}">${item.status}</span>
+            </p>
+        </div>
+        `;
+    })
+
+    document.getElementById("bookingsContainer").innerHTML = output;
+});
+ function logout() {
+    window.location.href = "login.html";
+ }
+</script>
+<footer>
+    <p>© 2026 PujaConnect | Online Puja Booking System</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pandit Listing</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            background:#f2f2f2;
+            text-align:center;
+        }
+
+        .card{
+            background:white;
+            width:300px;
+            margin:20px auto;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+
+        button{
+            background:#ff6600;
+            color:white;
+            border:none;
+            padding:10px;
+            border-radius:5px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Available Pandits</h1>
+
+<div class="card">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwqZLw5p6Eqn22sTS9pf-k0d93gkk-LsTdiQ&s" alt="Pandit Sharma">
+    <h2>Pandit Sharma</h2>
+    <p>Specialist: Griha Pravesh Puja</p>
+
+    <button onclick="bookPandit('Pandit Sharma')">
+        Book Now
+    </button>
+</div>
+
+<div class="card">
+    <img src="https://www.shutterstock.com/image-photo/indian-male-pandit-smiling-age-260nw-2513079627.jpg" alt="Pandit Mishra">
+    <h2>Pandit Mishra</h2>
+    <p>Specialist: Satyanarayan Puja</p>
+
+    <button onclick="bookPandit('Pandit Mishra')">
+        Book Now
+    </button>
+</div>
+
+<script>
+function bookPandit(name){
+     alert(name);
+    localStorage.setItem("selectedPandit", name);
+    window.location.href = "booking.html";
+}
+</script>
+<footer>
+    <p>© 2026 PujaConnect | Online Puja Booking System</p>
+</footer>
+</body>
+</html>

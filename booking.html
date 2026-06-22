@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Puja - PujaConnect</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Book Your Puja</h1>
+    <h3 id="panditName"></h3>
+
+    <form>
+        <label>Full Name:</label><br>
+        <input type="text" id="name" placeholder="Enter your name"><br><br>
+
+        <label>Phone Number:</label><br>
+        <input type="tel" id="phone" placeholder="Enter phone number"><br><br>
+
+        <label>Select Puja:</label><br>
+        <select>
+            <option>Satyanarayan Puja</option>
+            <option>Griha Pravesh Puja</option>
+            <option>Wedding Puja</option>
+        </select><br><br>
+
+        <label>Select Date:</label><br>
+        <input type="date"><br><br>
+
+        <label>Booking Time</label><br>
+        <input type="time" id="booking_time"><br><br>
+
+        <button type="button" 
+        onclick="bookPuja()">
+             Book Now
+        </button>
+    </form>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById("panditName").innerText = 
+        "Selected pandit: " + 
+        localStorage.getItem("selectedPandit");
+        document.getElementById("panditName").innerText =
+"       Selected pandit: " +
+         localStorage.getItem("selectedPandit");
+
+           function bookPuja() {
+
+            const name = 
+        document.getElementById("name").value;
+
+            const phone = 
+        document.getElementById("phone").value;
+
+             const pujaType =
+        document.querySelector("select").value;
+
+            const bookingDate =
+        document.querySelector('input[type="date"]').value;
+
+            const bookingTime =
+        document.getElementById("booking_time").value
+
+        fetch("http://localhost:5000/book-puja", {
+         method: "POST",
+         headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            phone: phone,
+            puja_type: pujaType,
+            booking_date: bookingDate,
+            booking_time: bookingTime
+        })
+     })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+    });
+
+}
+fetch("http://localhost:5000/user")
+.then(res => res.json())
+.then(data => {
+    console.log(data);
+
+    document.getElementById("name").value = data[0].name;
+    document.getElementById("phone").value = data[0].phone;
+});
+    </script>
+<footer>
+    <p>© 2026 PujaConnect | Online Puja Booking System</p>
+</footer>   
+</body>
+</html>

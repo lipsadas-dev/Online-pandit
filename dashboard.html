@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PujaConnect Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background: #ff6600;
+            color: white;
+            padding: 15px;
+            font-size: 20px;
+        }
+
+        .container {
+            margin-top: 80px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin: auto;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 15px;
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: darkred;
+        }
+        footer {
+            background: #ff6600;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        PujaConnect Dashboard
+    </div>
+
+    <div class="container">
+
+            <div class="card">
+    <h2 id="user">Welcome User</h2>
+    <p>You are successfully logged in 🎉</p>
+
+         <button onclick="location.href='pandits.html'">View Pandits</button>
+
+         <button onclick="location.href='booking.html'">Book Puja</button>
+
+         <button onclick="location.href='my-bookings.html'">My Bookings</button>
+
+         <button onclick="logout()">Logout</button>
+        </div>
+
+    </div>
+
+    <script>
+        if (!localStorage.getItem("userEmail"))
+    {
+        window.location.href = "login.html";
+    }
+        
+        // user show karo (login se aaya hua)
+        const userEmail = localStorage.getItem("userEmail");
+
+        if (userEmail) {
+            document.getElementById("user").innerText = "Welcome " + userEmail;
+        } else {
+            document.getElementById("user").innerText = "Welcome Guest";
+        }
+
+        // logout function
+        function logout() {
+            localStorage.removeItem("userEmail");
+            window.location.href = "login.html";
+        }
+    </script>
+
+<footer>
+    <p>© 2026 PujaConnect | Online Puja Booking System</p>
+</footer>
+</body>
+</html>
