@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/lipsadas-dev/online-pandit/issues"
   },
-  "homepage": "https://github.com/lipsadas-dev/online-pandit#readme"
+  "homepage": "https://github.com/lipsadas-dev/online-pandit#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mysql2": "^3.22.5"
+  }
 }
