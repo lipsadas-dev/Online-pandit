@@ -1,15 +1,19 @@
 const express = require("express");
 const db = require("./db");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("PujaConnect Backend Running");
-});
 app.use(cors());
-app.use(express.static("public"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 app.post("/register", (req, res) => {
     const { name, email, password } = req.body;
@@ -27,14 +31,7 @@ app.post("/register", (req, res) => {
     });
 });
 
-    app.get("/user", (req, res) => {
-    db.query("SELECT * FROM bookings", (err, result) => {
-        if (err) {
-            return res.status(500).json(err);
-        }
-        res.json(result);
-    });
-});
+    
 
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
@@ -54,14 +51,10 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.get("/",(req, res) => {
-    res.send("server is working");
-});
 
 app.post("/book-puja", (req, res) => {
 
-    
-    const { name, phone, puja_type, booking_date, booking_time } = req.body;
+     const { name, phone, puja_type, booking_date, booking_time } = req.body;
 
 const sql = `
 INSERT INTO bookings
@@ -94,6 +87,15 @@ app.post("/update-status", (req, res) => {
         res.send("Status Updated");
     });
 });
+app.get("/user", (req, res) => {
+    db.query("SELECT * FROM bookings", (err, result) => {
+        if (err) {
+            return res.status(500).json(err);
+        }
+        res.json(result);
+    });
+});
+
 app.put("/approve-booking/:id", (req, res) => {
 
     const bookingId = req.params.id;
