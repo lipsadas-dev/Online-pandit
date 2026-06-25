@@ -60,7 +60,7 @@
             const bookingTime =
         document.getElementById("booking_time").value
 
-        fetch("http://localhost:5000/book-puja", {
+        fetch("/book-puja", {
          method: "POST",
          headers: {
             "Content-Type": "application/json"
@@ -79,7 +79,7 @@
     });
 
 }
-fetch("http://localhost:5000/user")
+fetch("/user")
 .then(res => res.json())
 .then(data => {
     console.log(data);

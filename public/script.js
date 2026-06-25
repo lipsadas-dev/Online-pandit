@@ -11,7 +11,7 @@ function bookPuja() {
 
     alert("Booking Saved!");
 }
-fetch("http://localhost:5000/user")
+fetch("/user")
 .then(res => res.json())
 .then(data => {
     console.log(data);
