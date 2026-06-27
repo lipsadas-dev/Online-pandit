@@ -1,3 +1,8 @@
+require("dotenv").config();
+
+console.log(process.env);
+console.log(process.env.MYSQLHOST);
+
 const express = require("express");
 const db = require("./db");
 const cors = require("cors");
