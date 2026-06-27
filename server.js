@@ -1,7 +1,3 @@
-console.log("Server starting...");
-require("dotenv").config();
-
-
 const express = require("express");
 const db = require("./db");
 const cors = require("cors");
@@ -135,7 +131,6 @@ app.put("/reject-booking/:id", (req, res) => {
     });
 });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-    console.log("Server Running on Port", PORT);
+app.listen(5000, () => {
+    console.log("Server Running on Port 5000");
 });

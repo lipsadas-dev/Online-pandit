@@ -56,7 +56,7 @@
 </table>
 
 <script>
-fetch("/user")
+fetch("http://localhost:5000/user")
 .then(res => res.json())
 .then(data => {
 
@@ -120,7 +120,7 @@ fetch("/user")
 
 
 function approveBooking(id) {
-    fetch(`/approve-booking/${id}`, {
+    fetch(`http://localhost:5000/approve-booking/${id}`, {
         method: "PUT"
     })
     .then(res => res.text())
@@ -132,7 +132,7 @@ function approveBooking(id) {
 }
 function rejectBooking(id) {
 
-    fetch(`/reject-booking/${id}`, {
+    fetch(`http://localhost:5000/reject-booking/${id}`, {
         method: "PUT"
     })
     .then(res => res.text())
@@ -143,7 +143,7 @@ function rejectBooking(id) {
 
 }
 function updateStatus(id, status) {
-    fetch("/update-status", {
+    fetch("http://localhost:5000/update-status", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
