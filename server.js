@@ -6,7 +6,6 @@ const express = require("express");
 const db = require("./db");
 const cors = require("cors");
 const path = require("path");
-const { Server } = require("http");
 
 const app = express();
 
